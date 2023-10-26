@@ -36,28 +36,13 @@ namespace Cat_GPT
                 "meeeeooooww"
             };
 
-            //possibleSymbols = new List<char>{
-            //    "meow",
-            //    "mew",
-            //    "meeeow",
-            //    "miw",
-            //    "meeow",
-            //    "meoow",
-            //    "meeeoww",
-            //    "meooow",
-            //    "meeeeeow",
-            //    "meeeeow",
-            //    "meooww",
-            //    "meeeeeeow",
-            //    "meeeeoow",
-            //    "meeeooow",
-            //    "meeeeeeoww",
-            //    "meeeeoooow",
-            //    "meoww",
-            //    "meoooww",
-            //    "meeoowww",
-            //    "meeeeooooww"
-            //};
+            possibleSymbols = new List<char>{
+                ',',
+                '.',
+                '!',
+                '?',
+                '-'
+            };
         }
 
         public string GenerateResponse()
