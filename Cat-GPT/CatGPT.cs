@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
 namespace Cat_GPT
 {
     class CatGPT : IAnimalGPT
     {
         private readonly List<string> possibleResponses;
-        private readonly List<char> possibleSymbols;
+        private readonly List<char> possiblePunctuation;
 
-        CatGPT()
+        private static Random random = new Random();
+        public CatGPT()
         {
             possibleResponses = new List<string>{
                 "meow",
@@ -36,23 +33,37 @@ namespace Cat_GPT
                 "meeeeooooww"
             };
 
-            possibleSymbols = new List<char>{
+            possiblePunctuation = new List<char>{
                 ',',
                 '.',
                 '!',
                 '?',
-                '-'
+                '-',
+                '\n'
             };
         }
 
         public string GenerateResponse()
         {
-            throw new NotImplementedException();
-        }
+            List<string> randomizedResponses = possibleResponses.OrderBy(x => random.Next()).ToList();
+            int numResponses = random.Next(1, 6);
 
-        public void LogData()
-        {
-            throw new NotImplementedException();
+            StringBuilder responseBuilder = new StringBuilder();
+
+            for (int i = 0; i < numResponses; i++)
+            {
+                responseBuilder.Append(randomizedResponses[i]);
+
+                if (random.Next(2) == 1)
+                {
+                    int randomPosition = random.Next(possiblePunctuation.Count - 1);
+
+                    responseBuilder.Append(possiblePunctuation[randomPosition]);
+                }
+                responseBuilder.Append(" ");
+            }
+           
+            return responseBuilder.ToString().Trim();
         }
 
         public void Speak(string message)

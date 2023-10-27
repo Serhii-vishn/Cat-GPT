@@ -21,9 +21,17 @@ internal class Program
             {
                 case '1':
                     {
-                        CatGPT catChat = new();
-                        Console.Write("Send a message: "); string userMess = Console.ReadLine();
-                        Console.WriteLine("Response: " + catChat.GenerateResponse()); 
+                        Console.WriteLine("To end the chat, send - #");
+                        bool key = true;
+                        while(key)
+                        {                        
+                            CatGPT catChat = new();
+                            Console.Write("\nSend a message: "); string userMess = Console.ReadLine();
+                            if (userMess == "#")
+                                key = false;
+                            else
+                                Console.WriteLine("Response: " + catChat.GenerateResponse());
+                        }
                         break;
                     }
                 case '2':
