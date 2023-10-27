@@ -1,4 +1,6 @@
-﻿namespace Cat_GPT
+﻿using System.Text;
+
+namespace Cat_GPT
 {
     public interface IAnimalGPT
     {
