@@ -6,14 +6,9 @@ using System.Threading.Tasks;
 
 namespace Cat_GPT
 {
-    interface IAnimalGPT
+    public interface IAnimalGPT
     {
         string GenerateResponse();
         void Speak(string message);
-
-        void LogData();
-
-        //string GetChatHistory(string chatName); just idea
-        //string SaveChatHistory(string lineChat);
     }
 }
