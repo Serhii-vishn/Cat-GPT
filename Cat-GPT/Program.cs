@@ -30,7 +30,7 @@ internal class Program
                             if (userMess == "#")
                                 key = false;
                             else
-                                Console.WriteLine("Response: " + catChat.GenerateResponse());
+                                Console.WriteLine("Response: " + catChat.GenerateResponse(userMess));
                         }
                         break;
                     }

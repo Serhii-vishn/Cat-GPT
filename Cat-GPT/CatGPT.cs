@@ -38,16 +38,15 @@ namespace Cat_GPT
                 '.',
                 '!',
                 '?',
-                '-',
-                '\n'
+                '-'
             };
         }
 
-        public string GenerateResponse()
+        public string GenerateResponse(string userInput)
         {
            List<string> randomizedResponses = ShuffleList(possibleResponses);
 
-            StringBuilder responseBuilder = BuildResponse(randomizedResponses, random.Next(1, 6));
+            StringBuilder responseBuilder = BuildResponse(randomizedResponses, CalculateWordCount(userInput));
 
             return responseBuilder.ToString().Trim();
         }
@@ -56,6 +55,18 @@ namespace Cat_GPT
         {
             List<T> shuffledList = list.OrderBy(x => random.Next()).ToList();
             return shuffledList;
+        }
+
+        private int CalculateWordCount(string request)
+        {
+            int wordCount = 0;
+
+            if (request.Length <= 10)
+                wordCount = random.Next(1, request.Length);
+            else if (request.Length >= 10 && request.Length <= 25)
+                wordCount = random.Next(4, request.Length / 2);
+
+            return wordCount;
         }
 
         private StringBuilder BuildResponse(List<string> shuffledResponses, int numResponses)
