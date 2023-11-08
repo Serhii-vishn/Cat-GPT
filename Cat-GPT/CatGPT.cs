@@ -2,7 +2,7 @@
 
 namespace Cat_GPT
 {
-    class CatGPT : IAnimalGPT
+    class CatGPT : IAnimalGPT, IChatHistory 
     {
         private readonly List<string> possibleResponses;
         private readonly List<char> possiblePunctuation;
@@ -93,6 +93,21 @@ namespace Cat_GPT
         }
 
         public void Speak(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SaveChatHistory(string fileName, List<string> chatHistory)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<string> LoadChatHistory(string fileName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<string> GetChatList()
         {
             throw new NotImplementedException();
         }
