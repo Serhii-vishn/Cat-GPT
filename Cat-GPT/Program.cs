@@ -68,7 +68,7 @@ internal class Program
                 listResponses.Add($"Cat: {response}");
             }
         }
-        catChat.SaveChatHistory("test.txt", listResponses);
+        catChat.SaveChatHistory("ChatHistory\\test.txt", listResponses);
     }
 
     private static void HandleDogInteraction()
