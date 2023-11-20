@@ -40,23 +40,33 @@ internal class Program
                 break;
         }
 
-        Console.ReadLine(); // Це може бути винесено за межі циклу while, якщо ви хочете чекати натискання клавіші тільки після введення користувача.
+        Console.ReadLine();
     }
 
     private static void HandleCatInteraction()
     {
+        var listResponses = new List <string>();
+        CatGPT catChat = new();
+
         Console.WriteLine("To end the chat, send - #");
         bool key = true;
         while (key)
         {
-            CatGPT catChat = new();
+
             Console.Write("\nSend a message: ");
             string userMess = Console.ReadLine();
             if (userMess == "#")
                 key = false;
             else
-                Console.WriteLine("Response: " + catChat.GenerateResponse(userMess));
+            {
+                string response = catChat.GenerateResponse(userMess);
+                Console.WriteLine("Response: " + response);
+
+                listResponses.Add($"User: {userMess}");
+                listResponses.Add($"Cat: {response}");
+            }
         }
+        catChat.SaveChatHistory("test.txt", listResponses);
     }
 
     private static void HandleDogInteraction()

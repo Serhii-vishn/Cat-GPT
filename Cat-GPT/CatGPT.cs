@@ -47,8 +47,8 @@ namespace Cat_GPT
            List<string> randomizedResponses = ShuffleList(possibleResponses);
 
             StringBuilder responseBuilder = BuildResponse(randomizedResponses, CalculateWordCount(userInput));
-
-            return responseBuilder.ToString().Trim();
+   
+            return responseBuilder.ToString().Trim(); ;
         }
 
         private List<T> ShuffleList<T>(List<T> list)
@@ -99,7 +99,25 @@ namespace Cat_GPT
 
         public void SaveChatHistory(string fileName, List<string> chatHistory)
         {
-            throw new NotImplementedException();
+            Stream fileStream = new FileStream(fileName, FileMode.Append, FileAccess.Write);
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(fileStream))
+                {
+                    foreach (string message in chatHistory)
+                    {
+                        writer.WriteLine(message);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error saving chat history: " + ex.Message);
+            }
+            finally
+            {
+                fileStream.Close();
+            }
         }
 
         public List<string> LoadChatHistory(string fileName)
