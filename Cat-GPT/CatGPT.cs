@@ -99,24 +99,18 @@ namespace Cat_GPT
 
         public void SaveChatHistory(string fileName, List<string> chatHistory)
         {
-            Stream fileStream = new FileStream(fileName, FileMode.Append, FileAccess.Write);
             try
             {
+                using (FileStream fileStream = new FileStream(fileName, FileMode.Append, FileAccess.Write))
                 using (StreamWriter writer = new StreamWriter(fileStream))
                 {
                     foreach (string message in chatHistory)
-                    {
                         writer.WriteLine(message);
-                    }
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error saving chat history: " + ex.Message);
-            }
-            finally
-            {
-                fileStream.Close();
             }
         }
 

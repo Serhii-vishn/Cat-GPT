@@ -48,15 +48,17 @@ internal class Program
         var listResponses = new List <string>();
         CatGPT catChat = new();
 
-        Console.WriteLine("To end the chat, send - #");
-        bool key = true;
-        while (key)
+        Console.WriteLine("To end the chat, send - *");
+        bool chatActive = true;
+        while (chatActive)
         {
-
             Console.Write("\nSend a message: ");
             string userMess = Console.ReadLine();
-            if (userMess == "#")
-                key = false;
+
+            if (string.IsNullOrEmpty(userMess) || userMess.Trim() == "*")
+            {
+                chatActive = false;
+            }
             else
             {
                 string response = catChat.GenerateResponse(userMess);
