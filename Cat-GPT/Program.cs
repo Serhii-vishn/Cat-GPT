@@ -71,13 +71,21 @@ internal class Program
 
     private static void ViewChat()
     {
-
+        CatGPT catChat = new();
+        
+        var chatsLit = catChat.GetChatList();
+        Console.WriteLine("\n\nHere is the list of chats and the date of creation:");
+        foreach ( var chat in chatsLit )
+        {
+            Console.WriteLine(chat);
+        }
     }
 
     private static void HandleCatInteraction(string fileName)
     {
         var listResponses = new List<string>();
         CatGPT catChat = new();
+
 
         Console.WriteLine("To end the chat, send - *");
         bool chatActive = true;
