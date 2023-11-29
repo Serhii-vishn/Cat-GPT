@@ -94,7 +94,7 @@ internal class Program
                 StartNewChat();
                 break;
             case '2':
-                ContinueInSelectedChat(chatsList);
+                ContinueInSelectedChat(chatsList, catChat);
                 break;
             case '*':
                 ExitApplication();
@@ -107,13 +107,11 @@ internal class Program
         Console.WriteLine("\n");
     }
 
-    private static void ContinueInSelectedChat(List<string> chatsList)
+    private static void ContinueInSelectedChat(List<string> chatsList, CatGPT catChat)
     {
         Console.Write("\nEnter the chat number: ");
         if (int.TryParse(Console.ReadLine(), out int chatNum) && chatNum > 0 && chatNum <= chatsList.Count)
         {
-            CatGPT catChat = new();
-
             string chatName = chatsList[chatNum - 1];
             var chatHistory = catChat.LoadChatHistory(chatName);
 
