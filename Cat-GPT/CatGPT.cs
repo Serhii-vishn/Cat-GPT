@@ -121,7 +121,9 @@ namespace Cat_GPT
 
         public List<string> GetChatList()
         {
-            throw new NotImplementedException();
+            string[] files = Directory.GetFiles("ChatHistory\\", "*.txt", SearchOption.AllDirectories);
+
+            return files.ToList<string>();
         }
     }
 }
