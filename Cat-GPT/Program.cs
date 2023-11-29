@@ -2,8 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
-using System.Xml.Linq;
 
 internal class Program
 {
@@ -16,9 +16,7 @@ internal class Program
         while (true)
         {
             DisplayMainMenu();
-
             var keyInput = Console.ReadKey().KeyChar;
-
             ProcessMainMenuInput(keyInput);
         }
     }
@@ -58,8 +56,7 @@ internal class Program
     private static void StartNewChat()
     {
         Console.WriteLine("\n\n\t\t\t /\\_/\\  \r\n\t\t\t( o.o ) \r\n\t\t\t > ^ < MEEEEOW! Miw meooow\n");
-
-        Console.WriteLine("I`m CAT-GPT, nice to meet you (in human)");
+        Console.WriteLine("I'm CAT-GPT, nice to meet you (in human)");
 
         string fileName = GetChatFileName("Cat", DateTime.Now);
         HandleCatInteraction(fileName);
@@ -76,15 +73,13 @@ internal class Program
         var chatsList = catChat.GetChatList();
 
         List<string> chatNames = chatsList.Select(chat => Path.GetFileNameWithoutExtension(chat)
-                                                                .Replace("_", " "))
+                                                               .Replace("_", " "))
                                                                 .ToList();
 
         Console.WriteLine("\n\nHere is the list of chats and the date of creation:");
 
         for (int i = 0; i < chatNames.Count; i++)
-        {
             Console.WriteLine($"{i + 1}. {chatNames[i]}");
-        }
 
         Console.WriteLine("\n\tStart a new one - 1" +
                           "\n\tContinue in the selected chat - 2" +
@@ -99,17 +94,8 @@ internal class Program
                 StartNewChat();
                 break;
             case '2':
-                {
-                    Console.Write("\nEnter the chat number: "); int chatNum = Convert.ToInt32(Console.ReadLine());
-                    string chatName = chatsList[chatNum - 1];
-                    var chatHystory = catChat.LoadChatHistory(chatName);
-
-                    foreach (var chat in chatHystory)
-                        Console.WriteLine(chat);
-
-                    HandleCatInteraction(chatName);
-                    break;
-                }
+                ContinueInSelectedChat(chatsList);
+                break;
             case '*':
                 ExitApplication();
                 break;
@@ -121,14 +107,35 @@ internal class Program
         Console.WriteLine("\n");
     }
 
+    private static void ContinueInSelectedChat(List<string> chatsList)
+    {
+        Console.Write("\nEnter the chat number: ");
+        if (int.TryParse(Console.ReadLine(), out int chatNum) && chatNum > 0 && chatNum <= chatsList.Count)
+        {
+            CatGPT catChat = new();
+
+            string chatName = chatsList[chatNum - 1];
+            var chatHistory = catChat.LoadChatHistory(chatName);
+
+            foreach (var chat in chatHistory)
+                Console.WriteLine(chat);
+
+            HandleCatInteraction(chatName);
+        }
+        else
+        {
+            Console.WriteLine("Error! Invalid chat number. Try Again");
+        }
+    }
+
     private static void HandleCatInteraction(string fileName)
     {
         var listResponses = new List<string>();
         CatGPT catChat = new();
 
-
         Console.WriteLine("To end the chat, send - *");
         bool chatActive = true;
+
         while (chatActive)
         {
             Console.Write("\nSend a message: ");
@@ -152,7 +159,7 @@ internal class Program
 
     private static void ExitApplication()
     {
-        Console.WriteLine("\\n\n\t\tThank you for using, have a nice day ;)");
+        Console.WriteLine("\n\n\t\tThank you for using, have a nice day ;)");
         Console.WriteLine("\t-------------------------------------------------------");
         Console.ReadLine();
         Environment.Exit(0);
