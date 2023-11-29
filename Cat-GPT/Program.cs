@@ -31,7 +31,9 @@ internal class Program
 
                         Console.WriteLine("\n");
 
-                        HandleUserInput(kInp);
+                        DateTime now = DateTime.Now;
+                        string chatName = (kInp == '1') ? "Cat" : "Dog";
+                        HandleUserInput(kInp, "ChatHistory\\" + now.ToString(chatName.ToUpper() + "_ddd_MMM_yyyy_HH-mm") + ".txt");
                         break;
                     }
                 case '2':
@@ -54,12 +56,12 @@ internal class Program
         }
     }
 
-    private static void HandleUserInput(char keyInput)
+    private static void HandleUserInput(char keyInput, string fileName)
     {
         switch (keyInput)
         {
             case '1':
-                HandleCatInteraction();
+                HandleCatInteraction(fileName);
                 break;
             case '2':
                 HandleDogInteraction();
@@ -75,7 +77,7 @@ internal class Program
         Console.ReadLine();
     }
 
-    private static void HandleCatInteraction()
+    private static void HandleCatInteraction(string fileName)
     {
         var listResponses = new List <string>();
         CatGPT catChat = new();
@@ -100,7 +102,7 @@ internal class Program
                 listResponses.Add($"Cat: {response}");
             }
         }
-        catChat.SaveChatHistory("ChatHistory\\test.txt", listResponses);
+        catChat.SaveChatHistory(fileName, listResponses);
     }
 
     private static void HandleDogInteraction()
