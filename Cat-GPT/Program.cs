@@ -42,7 +42,7 @@ internal class Program
                 StartNewChat();
                 break;
             case ViewChatHistoryOption:
-                // Add logic for viewing chat history
+                ViewChat();
                 break;
             case ExitOption:
                 ExitApplication();
@@ -67,6 +67,11 @@ internal class Program
     private static string GetChatFileName(string chatName, DateTime now)
     {
         return Path.Combine("ChatHistory", $"{chatName.ToUpper()}_{now:ddd_MMM_yyyy_HH-mm}.txt");
+    }
+
+    private static void ViewChat()
+    {
+
     }
 
     private static void HandleCatInteraction(string fileName)
