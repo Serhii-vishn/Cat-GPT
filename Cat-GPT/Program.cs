@@ -1,59 +1,79 @@
 ﻿using Cat_GPT;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 internal class Program
 {
+    private const char NewChatOption = '1';
+    private const char ViewChatHistoryOption = '2';
+    private const char ExitOption = '*';
+
     private static void Main(string[] args)
     {
         while (true)
         {
-            Console.WriteLine("\t\tHello! Welcome to Animal-GPT");
-            Console.WriteLine("\t-------------------------------------------");
+            DisplayMainMenu();
 
-            Console.WriteLine("Select a menu item: "+
-                                                    "\n\tNew chat - 1" +
-                                                    "\n\tView chat history - 2" +
-                                                    "\n\tExit - *");
-            Console.Write("\tEnter: ");
             var keyInput = Console.ReadKey().KeyChar;
 
-            switch (keyInput)
-            {
-                case '1':
-                    {
-                        Console.WriteLine("\n\nYou can interact with the animals on the list below:" +
-                                                                            "\n\tCat - 1" +
-                                                                            "\n\tDog - 2" +
-                                                                            "\n\tExit - *");
-                        Console.Write("\tEnter: ");
-                        var kInp = Console.ReadKey().KeyChar;
-
-                        Console.WriteLine("\n");
-
-                        DateTime now = DateTime.Now;
-                        string chatName = (kInp == '1') ? "Cat" : "Dog";
-                        HandleUserInput(kInp, "ChatHistory\\" + now.ToString(chatName.ToUpper() + "_ddd_MMM_yyyy_HH-mm") + ".txt");
-                        break;
-                    }
-                case '2':
-                    {
-                        break;
-                    }
-                case '*':
-                    {
-                        ExitApplication();
-                        Console.WriteLine("Error! Invalid symbol. Try Again");
-                        break;
-                    }
-                default:
-                    {
-                        Console.WriteLine("Error! Invalid symbol. Try Again");
-                        break;
-                    }                  
-            }
-            Console.WriteLine("\n");
+            ProcessMainMenuInput(keyInput);
         }
+    }
+
+    private static void DisplayMainMenu()
+    {
+        Console.WriteLine("\t\tHello! Welcome to Animal-GPT");
+        Console.WriteLine("\t-------------------------------------------");
+
+        Console.WriteLine($"Select a menu item:" +
+                          $"\n\tNew chat - {NewChatOption}" +
+                          $"\n\tView chat history - {ViewChatHistoryOption}" +
+                          $"\n\tExit - {ExitOption}");
+        Console.Write("\tEnter: ");
+    }
+
+    private static void ProcessMainMenuInput(char keyInput)
+    {
+        switch (keyInput)
+        {
+            case NewChatOption:
+                StartNewChat();
+                break;
+            case ViewChatHistoryOption:
+                // Add logic for viewing chat history
+                break;
+            case ExitOption:
+                ExitApplication();
+                break;
+            default:
+                Console.WriteLine("Error! Invalid symbol. Try Again");
+                break;
+        }
+
+        Console.WriteLine("\n");
+    }
+
+    private static void StartNewChat()
+    {
+        Console.WriteLine("\n\nYou can interact with the animals on the list below:" +
+                          "\n\tCat - 1" +
+                          "\n\tDog - 2" +
+                          "\n\tExit - *");
+        Console.Write("\tEnter: ");
+        var kInp = Console.ReadKey().KeyChar;
+
+        Console.WriteLine("\n");
+
+        DateTime now = DateTime.Now;
+        string chatName = (kInp == '1') ? "Cat" : "Dog";
+        string fileName = GetChatFileName(chatName, now);
+        HandleUserInput(kInp, fileName);
+    }
+
+    private static string GetChatFileName(string chatName, DateTime now)
+    {
+        return Path.Combine("ChatHistory", $"{chatName.ToUpper()}_{now:ddd_MMM_yyyy_HH-mm}.txt");
     }
 
     private static void HandleUserInput(char keyInput, string fileName)
@@ -64,7 +84,7 @@ internal class Program
                 HandleCatInteraction(fileName);
                 break;
             case '2':
-                HandleDogInteraction();
+                // Add logic for handling dog interaction
                 break;
             case '*':
                 ExitApplication();
@@ -79,7 +99,7 @@ internal class Program
 
     private static void HandleCatInteraction(string fileName)
     {
-        var listResponses = new List <string>();
+        var listResponses = new List<string>();
         CatGPT catChat = new();
 
         Console.WriteLine("To end the chat, send - *");
@@ -105,11 +125,6 @@ internal class Program
         catChat.SaveChatHistory(fileName, listResponses);
     }
 
-    private static void HandleDogInteraction()
-    {
-        
-    }
-
     private static void ExitApplication()
     {
         Console.WriteLine("\t\tThank you for using, have a nice day ;)");
@@ -117,5 +132,4 @@ internal class Program
         Console.ReadLine();
         Environment.Exit(0);
     }
-
 }
