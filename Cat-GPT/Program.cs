@@ -56,8 +56,9 @@ internal class Program
 
     private static void StartNewChat()
     {
-        Console.WriteLine("\n\nYou can interact with the animals on the list below:");
-        Console.WriteLine("\n");
+        Console.WriteLine("\n\n\t\t\t /\\_/\\  \r\n\t\t\t( o.o ) \r\n\t\t\t > ^ < MEEEEOW! Miw meooow\n");
+
+        Console.WriteLine("I`m CAT-GPT, nice to meet you (in human)");
 
         string fileName = GetChatFileName("Cat", DateTime.Now);
         HandleCatInteraction(fileName);
