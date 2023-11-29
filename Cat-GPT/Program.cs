@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Xml.Linq;
 
 internal class Program
@@ -42,7 +43,7 @@ internal class Program
                 StartNewChat();
                 break;
             case ViewChatHistoryOption:
-                ViewChat();
+                ViewChatsList();
                 break;
             case ExitOption:
                 ExitApplication();
@@ -69,16 +70,55 @@ internal class Program
         return Path.Combine("ChatHistory", $"{chatName.ToUpper()}_{now:ddd_MMM_yyyy_HH-mm}.txt");
     }
 
-    private static void ViewChat()
+    private static void ViewChatsList()
     {
         CatGPT catChat = new();
-        
-        var chatsLit = catChat.GetChatList();
+        var chatsList = catChat.GetChatList();
+
+        List<string> chatNames = chatsList.Select(chat => Path.GetFileNameWithoutExtension(chat)
+                                                                .Replace("_", " "))
+                                                                .ToList();
+
         Console.WriteLine("\n\nHere is the list of chats and the date of creation:");
-        foreach ( var chat in chatsLit )
+
+        for (int i = 0; i < chatNames.Count; i++)
         {
-            Console.WriteLine(chat);
+            Console.WriteLine($"{i + 1}. {chatNames[i]}");
         }
+
+        Console.WriteLine("\n\tStart a new one - 1" +
+                          "\n\tContinue in the selected chat - 2" +
+                          "\n\tExit - *");
+
+        Console.Write("\tEnter: ");
+        var keyInput = Console.ReadKey().KeyChar;
+
+        switch (keyInput)
+        {
+            case '1':
+                StartNewChat();
+                break;
+            case '2':
+                {
+                    Console.WriteLine("Enter the chat number: "); int chatNum = Convert.ToInt32(Console.ReadLine());
+                    OpenExistChat(chatsList[chatNum-1]);
+                    break;
+                }
+            case '*':
+                ExitApplication();
+                break;
+            default:
+                Console.WriteLine("Error! Invalid symbol. Try Again");
+                break;
+        }
+
+        Console.WriteLine("\n");
+    }
+
+    private static void OpenExistChat(string fileName)
+    {
+
+
     }
 
     private static void HandleCatInteraction(string fileName)

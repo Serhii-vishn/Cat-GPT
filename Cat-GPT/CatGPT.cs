@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System.IO;
+using System.Reflection.PortableExecutable;
+using System.Text;
 
 namespace Cat_GPT
 {
@@ -116,7 +118,26 @@ namespace Cat_GPT
 
         public List<string> LoadChatHistory(string fileName)
         {
-            throw new NotImplementedException();
+            List<string> chatHistoryMess = new List<string>();
+            try
+            {
+                using (FileStream fileStream = new FileStream(fileName, FileMode.Append, FileAccess.Read))
+                using (StreamReader reader = new StreamReader(fileStream))
+                {
+                    string line = reader.ReadLine();
+
+                    while (line != null)
+                    {
+                        chatHistoryMess.Add(line);
+                        line = reader.ReadLine();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error opening chat history: " + ex.Message);
+            }
+            return chatHistoryMess;
         }
 
         public List<string> GetChatList()
