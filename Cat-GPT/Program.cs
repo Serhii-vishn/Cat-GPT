@@ -100,8 +100,14 @@ internal class Program
                 break;
             case '2':
                 {
-                    Console.WriteLine("Enter the chat number: "); int chatNum = Convert.ToInt32(Console.ReadLine());
-                    OpenExistChat(chatsList[chatNum-1]);
+                    Console.Write("\nEnter the chat number: "); int chatNum = Convert.ToInt32(Console.ReadLine());
+                    string chatName = chatsList[chatNum - 1];
+                    var chatHystory = catChat.LoadChatHistory(chatName);
+
+                    foreach (var chat in chatHystory)
+                        Console.WriteLine(chat);
+
+                    HandleCatInteraction(chatName);
                     break;
                 }
             case '*':
@@ -113,12 +119,6 @@ internal class Program
         }
 
         Console.WriteLine("\n");
-    }
-
-    private static void OpenExistChat(string fileName)
-    {
-
-
     }
 
     private static void HandleCatInteraction(string fileName)
@@ -152,7 +152,7 @@ internal class Program
 
     private static void ExitApplication()
     {
-        Console.WriteLine("\t\tThank you for using, have a nice day ;)");
+        Console.WriteLine("\\n\n\t\tThank you for using, have a nice day ;)");
         Console.WriteLine("\t-------------------------------------------------------");
         Console.ReadLine();
         Environment.Exit(0);

@@ -121,8 +121,7 @@ namespace Cat_GPT
             List<string> chatHistoryMess = new List<string>();
             try
             {
-                using (FileStream fileStream = new FileStream(fileName, FileMode.Append, FileAccess.Read))
-                using (StreamReader reader = new StreamReader(fileStream))
+                using (StreamReader reader = new StreamReader(fileName))
                 {
                     string line = reader.ReadLine();
 
