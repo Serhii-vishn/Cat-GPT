@@ -73,8 +73,7 @@ internal class Program
         var chatsList = catChat.GetChatList();
 
         List<string> chatNames = chatsList.Select(chat => Path.GetFileNameWithoutExtension(chat)
-                                                               .Replace("_", " "))
-                                                                .ToList();
+                                                               .Replace("_", " ")).ToList();
 
         Console.WriteLine("\n\nHere is the list of chats and the date of creation:");
 
