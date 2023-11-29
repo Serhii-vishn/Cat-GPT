@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml.Linq;
 
 internal class Program
 {
@@ -23,7 +24,7 @@ internal class Program
 
     private static void DisplayMainMenu()
     {
-        Console.WriteLine("\t\tHello! Welcome to Animal-GPT");
+        Console.WriteLine("\t\tHello! Welcome to CAT-GPT");
         Console.WriteLine("\t-------------------------------------------");
 
         Console.WriteLine($"Select a menu item:" +
@@ -50,51 +51,21 @@ internal class Program
                 Console.WriteLine("Error! Invalid symbol. Try Again");
                 break;
         }
-
         Console.WriteLine("\n");
     }
 
     private static void StartNewChat()
     {
-        Console.WriteLine("\n\nYou can interact with the animals on the list below:" +
-                          "\n\tCat - 1" +
-                          "\n\tDog - 2" +
-                          "\n\tExit - *");
-        Console.Write("\tEnter: ");
-        var kInp = Console.ReadKey().KeyChar;
-
+        Console.WriteLine("\n\nYou can interact with the animals on the list below:");
         Console.WriteLine("\n");
 
-        DateTime now = DateTime.Now;
-        string chatName = (kInp == '1') ? "Cat" : "Dog";
-        string fileName = GetChatFileName(chatName, now);
-        HandleUserInput(kInp, fileName);
+        string fileName = GetChatFileName("Cat", DateTime.Now);
+        HandleCatInteraction(fileName);
     }
 
     private static string GetChatFileName(string chatName, DateTime now)
     {
         return Path.Combine("ChatHistory", $"{chatName.ToUpper()}_{now:ddd_MMM_yyyy_HH-mm}.txt");
-    }
-
-    private static void HandleUserInput(char keyInput, string fileName)
-    {
-        switch (keyInput)
-        {
-            case '1':
-                HandleCatInteraction(fileName);
-                break;
-            case '2':
-                // Add logic for handling dog interaction
-                break;
-            case '*':
-                ExitApplication();
-                break;
-            default:
-                Console.WriteLine("Error! Invalid symbol. Try Again");
-                break;
-        }
-
-        Console.ReadLine();
     }
 
     private static void HandleCatInteraction(string fileName)
