@@ -10,16 +10,47 @@ internal class Program
         {
             Console.WriteLine("\t\tHello! Welcome to Animal-GPT");
             Console.WriteLine("\t-------------------------------------------");
-            Console.WriteLine("You can interact with the animals on the list below:" +
-                                                                "\n\tCat - 1" +
-                                                                "\n\tDog - 2" +
-                                                                "\n\tExit - *");
+
+            Console.WriteLine("Select a menu item: "+
+                                                    "\n\tNew chat - 1" +
+                                                    "\n\tView chat history - 2" +
+                                                    "\n\tExit - *");
             Console.Write("\tEnter: ");
             var keyInput = Console.ReadKey().KeyChar;
 
-            Console.WriteLine("\n");
+            switch (keyInput)
+            {
+                case '1':
+                    {
+                        Console.WriteLine("\n\nYou can interact with the animals on the list below:" +
+                                                                            "\n\tCat - 1" +
+                                                                            "\n\tDog - 2" +
+                                                                            "\n\tExit - *");
+                        Console.Write("\tEnter: ");
+                        var kInp = Console.ReadKey().KeyChar;
 
-            HandleUserInput(keyInput);
+                        Console.WriteLine("\n");
+
+                        HandleUserInput(kInp);
+                        break;
+                    }
+                case '2':
+                    {
+                        break;
+                    }
+                case '*':
+                    {
+                        ExitApplication();
+                        Console.WriteLine("Error! Invalid symbol. Try Again");
+                        break;
+                    }
+                default:
+                    {
+                        Console.WriteLine("Error! Invalid symbol. Try Again");
+                        break;
+                    }                  
+            }
+            Console.WriteLine("\n");
         }
     }
 
